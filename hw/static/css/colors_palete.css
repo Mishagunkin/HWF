@@ -1,0 +1,17 @@
+/* CSS - Каскадные Таблицы Стилей */
+/* Адрес цветовой схемы: https://colorscheme.ru/#3P21Tw0w0w0w0 */
+
+
+/* HEX коды */
+
+.primary-color-0 { color: #1437ad }		/* Основной Цвет */
+.primary-color-1 { color: #2c4081 }
+.primary-color-2 { color: #061f70 }
+.primary-color-3 { color: #4869d6 }
+.primary-color-4 { color: #6e86d6 }
+
+.complement-color-0 { color: #ffb000 }	/* Дополнительный Цвет */
+.complement-color-1 { color: #bf9330 }
+.complement-color-2 { color: #a67200 }
+.complement-color-3 { color: #ffc440 }
+.complement-color-4 { color: #ffd373 }

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block main_block %}
+<h2>Мои отели</h2>
+{% for obj in object_list %}
+<div class="main-panel-elem">
+    <div class="row">
+        <div class="col-md-2">
+            {% load static  %}
+            <img style="width:100px;" src="{% static 'img/hotel.jpg' %}">
+        </div>
+        <div class="col-md-8">
+            <h3><a href="#">{{ obj.name }}</a></h3>
+            <div style="">{{ obj.adress }}</div>
+            Описание: {{ obj.description }}
+        </div>
+        <div class="col-md-2">
+            <div><a class="btn btn-default" href="#" role="button">Изменить</a></div>
+            <div><a class="btn btn-default" href="#" role="button">Удалить</a></div>
+        </div>
+    </div>
+
+</div>
+{% empty %}
+<div class="main-panel-elem">
+    На данный момент у вас нет отелей
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block side_block %}
+<h2>Пользователь:</h2>
+<div class="side-panel-elem">
+    <h3>{{ traveler.last_name }} {{ traveler.first_name }}</h3>
+    {{ traveler.user.email }}
+</div>
+{% endblock %}

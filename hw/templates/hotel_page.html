@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block main_block %}
+{% csrf_token %}
+<h2 id="hotel_name">{{ hotel.name }}</h2>
+<div class="main-panel-elem">
+    {% if hotel is None %}
+        <h3>Такого отеля нет в базе данных</h3>
+    {% else %}
+    <div class="row">
+        <div class="col-md-4" style="text-align: center;">
+            {% load static  %}
+            <img src="{{ hotel.photo.url }}" style="max-width: 200px;">
+        </div>
+        <div class="col-md-8">
+            <div style=""><h4>Адрес:</h4>{{ hotel.adress }}</div>
+            {% if features is not None %}
+            <div style=""><h4>Особенности:</h4></div>
+            {% for feature in features %}
+            <span class="label label-default" style="margin-right:5px;">
+                {{ feature }}
+            </span>
+            {% endfor %}
+            {% endif %}
+            <div><h4>Описание:</h4> {{ hotel.description }}</div>
+            <div><h4 id="last_bookings_header" hidden="True">Ваши последние бронирования:</h4></div>
+            <table class="table" id="last_bookings" onload="load_last_bookings()"></table>
+            <!--<div><a class="btn btn-primary" href="{% url 'booking' hotel.name %}" role="button" style="margin-top: 10px;">Забронировать</a></div>-->
+            <div><a href="#" class="btn btn-primary btn_modal_booking" style="margin-top: 10px;">Забронировать</a></div>
+
+
+            <!-- HTML-код модального окна -->
+            <div id="modalBooking" class="modal fade"  ontoggle="book_modal_load()">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- Заголовок модального окна -->
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Бронирование отеля</h4>
+                        </div>
+                        <!-- Основное содержимое модального окна -->
+                        <div class="modal-body">
+                            <form id="booking_form" method="POST" class="form-horizontal" enctype="multipart/form-data" >
+                                <div id="date_errors" class="alert alert-danger" role="alert" hidden="True"></div>
+                                {% for field in booking_form %}
+                                <div class="form-group">
+                                    <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">{{ field.label }}:</label>
+                                    <div class="col-sm-9">
+                                        {{ field }}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <div id="success_booking" class="alert alert-success" role="alert" hidden="True"></div>
+                            </form>
+                        </div>
+                        <!-- Футер модального окна -->
+                        <div class="modal-footer">
+                            <button id="btn_close" type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                            <button id="btn_book"  type="button" class="btn btn-primary">Забронировать</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block side_block %}
+<h2>Пользователь:</h2>
+<div class="side-panel-elem">
+    {% include "traveler_info.html" %}
+</div>
+{% endblock %}

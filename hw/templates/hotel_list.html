@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block main_block %}
+<h2>Выберите отели</h2>
+{% for obj in object_list %}
+<div class="main-panel-elem">
+    <div class="row">
+        <div class="col-md-2">
+            {% load static  %}
+            <!--<img style="width:100px;" src="{% static 'img/hotel.jpg' %}">-->
+            <img style="width:100px; height:100px;" src="{{ obj.photo.url }}">
+        </div>
+        <div class="col-md-10">
+            <h3><a href="{% url 'hotel_page' obj.name %}">{{ obj.name }}</a></h3>
+            <div style="">{{ obj.adress }}</div>
+            Описание: {{ obj.description }}
+            <div><a class="btn btn-primary" href="{% url 'booking' obj.name %}" role="button">Забронировать</a></div>
+            <!--<div><a class="btn btn-primary btn_modal_booking" href="#modalBooking" role="button" data-toggle="modal">Забронировать</a></div>-->
+        </div>
+    </div>
+
+</div>
+{% empty %}
+<div class="main-panel-elem">
+    Отелей для бронирования пока нет
+</div>
+{% endfor %}
+{% if paginator.num_pages > 1 %}
+        {% if page_obj.has_previous %}
+            <a href="{% url 'hotel_list_page' page_obj.previous_page_number %}">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a href="{% url 'hotel_list_page' page_obj.next_page_number %}">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        {% endif %}
+{% endif %}
+{% endblock %}
+
+{% block side_block %}
+<h2>Пользователь:</h2>
+<div class="side-panel-elem">
+    {% include "traveler_info.html" %}
+</div>
+{% endblock %}

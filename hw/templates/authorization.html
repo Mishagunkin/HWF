@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block main_block %}
+{% if not user.is_authenticated %}
+<form method="POST" class="form-horizontal main-panel-elem">
+    <h2>Авторизация</h2>
+    {% csrf_token %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger" role="alert">{{ error }}</div>
+        {% endfor %}
+    {% endfor %}
+
+    {% for field in form %}
+    <div class="form-group">
+        <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">{{ field.label }}:</label>
+        <div class="col-sm-9">
+            {{ field }}
+        </div>
+    </div>
+    {% endfor %}
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+            <button type="submit" class="btn btn-primary">Войти</button>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+            <a href="{% url 'registration' %}" type="submit" class="btn btn-primary">Регистрация</a>
+        </div>
+    </div>
+</form>
+{% else %}
+<div class="main-panel-elem">
+    <h2>Выйдите из системы, чтобы иметь возможность авторизоваться</h2>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block side_block %}
+<div class="side-panel-elem">
+<h3>Без авторизации пользование порталом невозможно</h3>
+</div>
+{% endblock %}

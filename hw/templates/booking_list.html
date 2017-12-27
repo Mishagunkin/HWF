@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+asd
+{% block main_block %}
+<h2>Бронирования</h2>
+{% for obj in object_list %}
+<div class="main-panel-elem">
+    <div class="row">
+        <div class="col-md-2">
+            {% load static  %}
+            <img style="width:100px; height:100px;" src="{{ obj.hotel.photo.url }}">
+        </div>
+        <div class="col-md-10">
+            <h3><a href="{% url 'hotel_page' obj.hotel.name %}">{{ obj.hotel.name }}</a></h3>
+            <div style="">{{ obj.hotel.adress }}</div>
+            <div>Цена: {{ obj.price }}</div>
+            <div>{{ obj.start_date }} - {{ obj.end_date }}</div>
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="main-panel-elem">
+    На данный момент вы ничего не забронировали
+</div>
+{% endfor %}
+{% if paginator.num_pages > 1 %}
+        {% if page_obj.has_previous %}
+            <a href="{% url 'book_list_page' page_obj.previous_page_number %}">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a href="{% url 'book_list_page' page_obj.next_page_number %}">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        {% endif %}
+{% endif %}
+{% endblock %}
+
+{% block side_block %}
+<h2>Пользователь:</h2>
+<div class="side-panel-elem">
+    {% include "traveler_info.html" %}
+</div>
+<!--<div class="side-panel-elem">-->
+<div><a class="btn btn-primary" href="{% url 'hotel_list' %}" role="button">Забронировать отель</a></div>
+<!--</div>-->
+{% endblock %}
